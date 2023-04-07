@@ -177,7 +177,7 @@ const Content = () => {
             </div>
             <div className='block lg:hidden'>
                     <Drawer
-                        title="Описание"
+                        title={<div className='flex justify-between'><p>Описание</p><p onClick={onClose}>Закрыть</p></div>}
                         placement="right"
                         closable={false}
                         onClose={onClose}
