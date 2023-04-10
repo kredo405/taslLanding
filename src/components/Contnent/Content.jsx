@@ -1,6 +1,7 @@
-import { Dropdown, Space, Pagination, Input, Button, Drawer, Rate  } from 'antd';
-import { DownOutlined, CheckCircleTwoTone } from '@ant-design/icons';
+import { Dropdown, Space, Pagination, Input, Button, Drawer, Checkbox   } from 'antd';
+import { DownOutlined, CheckCircleTwoTone, LikeTwoTone, DislikeTwoTone, FilterTwoTone } from '@ant-design/icons';
 import { useEffect, useState } from 'react';
+import FilterDropdown from '../FilterDropdown/FilterDropDown';
 
 const { Search } = Input;
 
@@ -95,18 +96,30 @@ const Content = () => {
     const onClose = () => {
         setOpen(false);
     };
+      const onChange = (e) => {
+        console.log(`checked = ${e.target.checked}`);
+      };
 
     const tasks = data.map(el => {
         return (
             <div
                 className='flex flex-col lg:flex-row items-center justify-between border-y cursor-pointer border-slate-200 py-3 px-4'
-                onClick={() => {setDescription(el.description); showDrawer()}}>
-                <div className='flex w-full lg:w-10/12 lg:items-center'>
+                onClick={() => { setDescription(el.description); showDrawer() }}>
+                <div className='flex w-full lg:w-8/12 lg:items-center'>
                     <div className='w-8/12'>{el.task}</div>
                     <div className='w-2/12'>{el.complexity}</div>
-                    <Rate className='w-2/12' onChange={setValue} value={el.rate} />
                 </div>
-                <div className="flex justify-end">{el.isDone ? <CheckCircleTwoTone /> : <div className='w-2/12'></div>}</div>
+                <div className='flex items-center w-2/12'>
+                    <div className='flex items-center px-2 w-6/12'>
+                        <LikeTwoTone />
+                        <p>13</p>
+                    </div>
+                    <div className='flex items-center px-2 w-6/12'>
+                        <DislikeTwoTone />
+                        <p>123</p>
+                    </div>
+                </div>
+                <div className="flex justify-end w-2/12">{el.isDone ? <CheckCircleTwoTone /> : <div className=''></div>}</div>
             </div>
         )
     });
@@ -130,10 +143,9 @@ const Content = () => {
         },
     ];
 
-
     return (
         <div className='flex justify-between z-0 relative'>
-            <div className='w-full lg:w-8/12'>
+            <div className='w-full lg:w-7/12'>
                <div className='flex justify-between items-center px-5'>
                <div>
                     <Search
@@ -143,6 +155,9 @@ const Content = () => {
                             width: 200,
                         }}
                     />
+                </div>
+                <div className='py-3 px-3 flex justify-end'>
+                    <FilterDropdown/>
                 </div>
                 <div className='py-3 px-3 flex justify-end'>
                     <Dropdown
@@ -166,7 +181,7 @@ const Content = () => {
                     </div>
                 </div>
             </div>
-            <div className='w-4/12 mt-10 hidden lg:block'>
+            <div className='w-5/12 mt-10 hidden lg:block'>
                 <h2 className='text-center font-bold text-3xl'>Описание</h2>
                 <div className='p-5'>
                     {description}
