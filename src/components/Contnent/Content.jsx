@@ -1,210 +1,196 @@
-import { Dropdown, Space, Pagination, Input, Button, Drawer, Checkbox   } from 'antd';
-import { DownOutlined, CheckCircleTwoTone, LikeTwoTone, DislikeTwoTone, FilterTwoTone } from '@ant-design/icons';
 import { useEffect, useState } from 'react';
 import FilterDropdown from '../FilterDropdown/FilterDropDown';
+import { Fragment } from 'react'
+import { Menu, Transition } from '@headlessui/react'
+import { ChevronDownIcon } from '@heroicons/react/20/solid'
+import { useNavigate } from 'react-router';
+import ListTasks from '../lListTask/ListTasks';
+import PaginationTasks from '../PaginationTasks/PaginationTasks';
 
-const { Search } = Input;
+
+function classNames(...classes) {
+    return classes.filter(Boolean).join(' ')
+}
+
 
 const Content = () => {
     const [loading, setLoading] = useState(false);
     const [description, setDescription] = useState('');
     const [value, setValue] = useState(3);
-    const [data, setData] = useState([
-        {
-            task: 'Создать класс "Студент",',
-            description: 'Создать класс "Студент", содержащий поля "имя", "возраст" и "средний балл". Написать метод, который будет выводить на экран информацию о студенте (имя, возраст, средний балл).',
-            rate: 4,
-            complexity: 'Легко',
-            isDone: true
-        },
-        {
-            task: 'Квадрат числа",',
-            description: 'Написать программу, которая считывает с клавиатуры целое число и выводит на экран его квадрат. Использовать класс Scanner.',
-            rate: 4,
-            complexity: 'Легко',
-            isDone: false
-        },
-        {
-            task: 'Создать класс "Прямоугольник"',
-            description: 'Создать класс "Прямоугольник", содержащий поля "ширина" и "высота". Написать метод, который будет возвращать площадь прямоугольника..',
-            rate: 5,
-            complexity: 'Сложно',
-            isDone: true
-        },
-        {
-            task: 'Программа для рассчета суммы',
-            description: 'Написать программу, которая считывает с клавиатуры целые числа и выводит на экран их сумму. Использовать класс Scanner и цикл while.',
-            rate: 3,
-            complexity: 'Сложно',
-            isDone: true
-        },
-        {
-            task: 'Создать класс "Калькулятор"',
-            description: 'Создать класс "Калькулятор", содержащий методы для выполнения математических операций (сложение, вычитание, умножение, деление). Написать программу, которая считывает с клавиатуры два числа и знак операции, а затем вызывает соответствующий метод класса "Калькулятор" для выполнения операции и выводит результат на экран.',
-            rate: 4,
-            complexity: 'Сложно',
-            isDone: false
-        },
-        {
-            task: 'Сортировка слов',
-            description: 'Написать программу, которая считывает с клавиатуры строку, разбивает ее на отдельные слова, сортирует слова по алфавиту и выводит их на экран.',
-            rate: 2,
-            complexity: 'Легко',
-            isDone: true
-        },
-        {
-            task: 'Создать класс "Массив"',
-            description: 'Создать класс "Массив", содержащий поле "массив" и методы для работы с ним (например, методы для добавления элемента, удаления элемента, получения элемента по индексу и т.д.). Написать программу, которая создает массив, добавляет в него элементы, удаляет элементы, выводит на экран элементы массива и т.д.',
-            rate: 1,
-            complexity: 'Легко',
-            isDone: false
-        },
-        {
-            task: 'Являится ли строка палидромом',
-            description: 'Написать программу, которая считывает с клавиатуры строку, проверяет, является ли она палиндромом (т.е. читается одинаково слева направо и справа налево) и выводит на экран соответствующее сообщение.',
-            rate: 4,
-            complexity: 'Легко',
-            isDone: true
-        },
-        {
-            task: 'Создать класс "Счетчик"',
-            description: 'Создать класс "Счетчик", содержащий поле "значение" и методы для увеличения и уменьшения значения счетчика. Написать программу, которая создает экземпляр класса "Счетчик", устанавливает его значение, увеличивает и уменьшает значение и выводит его на экран.',
-            rate: 5,
-            complexity: 'Легко',
-            isDone: false
-        },
-        {
-            task: 'Реализация алгоритма Дейкстры',
-            description: 'Задача заключается в написании программы, которая находит кратчайший путь между двумя вершинами графа с помощью алгоритма Дейкстры. Для этого нужно ввести матрицу смежности графа и выбрать начальную и конечную вершину',
-            rate: 4,
-            complexity: 'Очень сложно',
-            isDone: false
-        },
-        {
-            task: 'Реализация системы управления банком',
-            description: 'Задача заключается в написании программы, которая позволяет управлять банковскими счетами и операциями с ними. Программа должна позволять открывать и закрывать счета, вносить и снимать деньги, проводить переводы и т.д. Также нужно предусмотреть механизм проверки подлинности пользователей и защиты от мошенничества.',
-            rate: 4,
-            complexity: 'Очень сложно',
-            isDone: false
-        },
-    ]);
-
     const [open, setOpen] = useState(false);
+    const [current, setCurrent] = useState(3);
+
+    const navigate = useNavigate();
+
     const showDrawer = () => {
         setOpen(true);
     };
+
     const onClose = () => {
         setOpen(false);
     };
-      const onChange = (e) => {
+    const onChange = (e) => {
         console.log(`checked = ${e.target.checked}`);
-      };
+    };
 
-    const tasks = data.map(el => {
-        return (
-            <div
-                className='flex flex-col lg:flex-row items-center justify-between border-y cursor-pointer border-slate-200 py-3 px-4'
-                onClick={() => { setDescription(el.description); showDrawer() }}>
-                <div className='flex w-full lg:w-8/12 lg:items-center'>
-                    <div className='w-8/12'>{el.task}</div>
-                    <div className='w-2/12'>{el.complexity}</div>
-                </div>
-                <div className='flex items-center w-2/12'>
-                    <div className='flex items-center px-2 w-6/12'>
-                        <LikeTwoTone />
-                        <p>13</p>
-                    </div>
-                    <div className='flex items-center px-2 w-6/12'>
-                        <DislikeTwoTone />
-                        <p>123</p>
-                    </div>
-                </div>
-                <div className="flex justify-end w-2/12">{el.isDone ? <CheckCircleTwoTone /> : <div className=''></div>}</div>
-            </div>
-        )
-    });
-
-    const items = [
-        {
-            key: '1',
-            label: (
-                <span target="_blank" rel="noopener noreferrer" >
-                    По сложности
-                </span>
-            ),
-        },
-        {
-            key: '2',
-            label: (
-                <span target="_blank" rel="noopener noreferrer">
-                    По рейтигу
-                </span>
-            ),
-        },
-    ];
+    const onChangePagination = (page) => {
+        console.log(page);
+        setCurrent(page);
+    };
 
     return (
         <div className='flex justify-between z-0 relative'>
             <div className='w-full lg:w-7/12'>
-               <div className='flex justify-between items-center px-5'>
-               <div>
-                    <Search
-                        placeholder="Поиск"
-                        // onSearch={onSearch}
-                        style={{
-                            width: 200,
-                        }}
-                    />
+                <div className='flex md:hidden'>
+                    <form
+                        onSubmit={(e) => e.preventDefault()}
+                        className="px-4 w-full mx-auto">
+                        <div className="relative">
+                            <svg xmlns="http://www.w3.org/2000/svg" className="absolute top-0 bottom-0 w-3 h-3 my-auto text-gray-400 left-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                            </svg>
+                            <input
+                                type="text"
+                                placeholder="Поиск"
+                                className="dark:bg-slate-800 dark:text-gray-50 dark:border-slate-700 w-full pl-12 pr-4 text-gray-600 border rounded-md outline-none  bg-white focus:bg-gray-50 focus:border-indigo-600"
+                            />
+                        </div>
+                    </form>
                 </div>
-                <div className='py-3 px-3 flex justify-end'>
-                    <FilterDropdown/>
-                </div>
-                <div className='py-3 px-3 flex justify-end'>
-                    <Dropdown
-                        menu={{
-                            items,
-                        }}
-                    >
-                        <a onClick={(e) => e.preventDefault()}>
-                            <Space>
-                                Сортировка
-                                <DownOutlined />
-                            </Space>
-                        </a>
-                    </Dropdown>
-                </div>
-               </div>
-                <div className="w-full">
-                    {tasks}
-                    <div className="flex w-full justify-center pt-2">
-                        <Pagination defaultCurrent={1} total={50} />
+                <div className='flex justify-between items-center px-2'>
+                    <div className='hidden md:flex w-full mt-2'>
+                        <form
+                            onSubmit={(e) => e.preventDefault()}
+                            className="max-w-md px-4 mx-auto">
+                            <div className="relative">
+                                <svg xmlns="http://www.w3.org/2000/svg" className="absolute top-0 bottom-0 w-3 h-3 my-auto text-gray-400 left-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                                </svg>
+                                <input
+                                    type="text"
+                                    placeholder="Поиск"
+                                    className="dark:bg-slate-800 dark:border-slate-700 w-full pl-12 pr-4 text-gray-600 border rounded-md outline-none  bg-white focus:bg-gray-50 focus:border-indigo-600"
+                                />
+                            </div>
+                        </form>
                     </div>
+                    <div className='py-3 flex justify-start w-full'>
+                        <FilterDropdown />
+                    </div>
+                    <div className='py-3 px-3 flex justify-end'>
+                        <Menu as="div" className="relative inline-block text-left">
+                            <div>
+                                <Menu.Button className="md:text-base inline-flex w-full justify-center dark:border-slate-800 border-white gap-x-1.5 rounded-md dark:bg-slate-800 bg-white px-3 py-2 text-sm font-semibold dark:text-gray-50 text-gray-900  hover:bg-gray-50">
+                                    Сортировка
+                                    <ChevronDownIcon className="-mr-1 h-5 w-5 text-gray-400" aria-hidden="true" />
+                                </Menu.Button>
+                            </div>
+
+                            <Transition
+                                as={Fragment}
+                                enter="transition ease-out duration-100"
+                                enterFrom="transform opacity-0 scale-95"
+                                enterTo="transform opacity-100 scale-100"
+                                leave="transition ease-in duration-75"
+                                leaveFrom="transform opacity-100 scale-100"
+                                leaveTo="transform opacity-0 scale-95"
+                            >
+                                <Menu.Items className="absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                                    <div className="py-1">
+                                        <Menu.Item>
+                                            {({ active }) => (
+                                                <a
+                                                    href="#"
+                                                    className={classNames(
+                                                        active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
+                                                        'block px-4 py-2 text-sm'
+                                                    )}
+                                                >
+                                                    По сложности
+                                                </a>
+                                            )}
+                                        </Menu.Item>
+                                        <Menu.Item>
+                                            {({ active }) => (
+                                                <a
+                                                    href="#"
+                                                    className={classNames(
+                                                        active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
+                                                        'block px-4 py-2 text-sm'
+                                                    )}
+                                                >
+                                                    По рейтингу
+                                                </a>
+                                            )}
+                                        </Menu.Item>
+                                    </div>
+                                </Menu.Items>
+                            </Transition>
+                        </Menu>
+                    </div>
+                </div>
+                <div className="w-full">
+                    <ListTasks setDescription={setDescription} showDrawer={showDrawer} />
+                    <PaginationTasks />
                 </div>
             </div>
             <div className='w-5/12 mt-10 hidden lg:block'>
-                <h2 className='text-center font-bold text-3xl'>Описание</h2>
-                <div className='p-5'>
+                <h2 className='text-center font-bold text-3xl dark:text-gray-50'>Описание</h2>
+                <div className='p-5 dark:text-gray-50'>
                     {description}
-                   
+                    {description ?
+                        <button
+                            className="px-7 w-full mt-24 py-4 text-white duration-150 bg-indigo-600 rounded-full hover:bg-indigo-500 active:bg-indigo-700"
+                            onClick={() => navigate('/simulator')}
+                        >
+                            Решить в тренажере
+                        </button>
+                        :
+                        null
+                    }
                 </div>
                 <div>
                 </div>
             </div>
             <div className='block lg:hidden z-10'>
-                    <Drawer
-                        title='Описание'
-                        placement="right"
-                        closable={false}
-                        onClose={onClose}
-                        open={open}
-                        getContainer={false}
-                        extra={
-                              <Button onClick={onClose}>Cancel</Button>
-                          }
-                    >
-                        <p>{description}</p>
-                    </Drawer>
-                </div>
+                {open ?
+                    <div className="fixed inset-0 z-10 overflow-y-auto">
+                        <div className="fixed inset-0 w-full h-full bg-black opacity-40" onClick={() => setOpen(false)}></div>
+                        <div className="flex items-center min-h-screen px-4 py-8">
+                            <div className="relative w-full max-w-lg mx-auto bg-white rounded-md shadow-lg">
+                                <div className="flex items-center justify-between p-4 border-b">
+                                    <h4 className="text-lg font-medium text-gray-800">
+                                        Описание
+                                    </h4>
+                                    <button className="p-2 text-gray-400 rounded-md hover:bg-gray-100"
+                                        onClick={() => setOpen(false)}
+                                    >
+                                        <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5 mx-auto" viewBox="0 0 20 20" fill="currentColor">
+                                            <path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd" />
+                                        </svg>
+                                    </button>
+                                </div>
+                                <div className="space-y-2 p-4 mt-3 text-[15.5px] leading-relaxed text-gray-500">
+                                    {description}
+                                </div>
+                                <div className="flex items-center gap-3 p-4 mt-5 border-t">
+                                    <button className="px-6 py-2 text-white bg-indigo-600 rounded-md outline-none ring-offset-2 ring-indigo-600 focus:ring-2"
+                                        onClick={() => {setOpen(false);  navigate('/simulator')}}
+                                    >
+                                        Решить в тренажере
+                                    </button>
+                                    <button className="px-6 py-2 text-gray-800 border rounded-md outline-none ring-offset-2 ring-indigo-600 focus:ring-2"
+                                        onClick={() => setOpen(false)}
+                                    >
+                                        Закрыть
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    :
+                    null}
+            </div>
         </div>
     )
 }
