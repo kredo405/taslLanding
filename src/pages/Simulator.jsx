@@ -3,14 +3,84 @@ import { useSelector } from "react-redux";
 import { Tabs } from "antd";
 import Editor from "@monaco-editor/react";
 import Footer from "../components/Footer/Footer";
+import { Tree } from "antd";
 import { useState } from "react";
 
 const radios = ["Write and Read", "Read only", "Write only"];
+const { DirectoryTree } = Tree;
 
 const Simulator = () => {
     const state = useSelector((state) => state);
     const task = state.taskSlice.task;
     const [open, setOpen] = useState(false);
+
+    const treeData = [
+        {
+            title: "testTaskName",
+            key: "0-0",
+            children: [
+                {
+                    title: "src",
+                    key: "0-0-0",
+                    children: [
+                        {
+                            title: "main",
+                            key: "0-0-0-1",
+                            children: [
+                                {
+                                    title: "java",
+                                    key: "0-0-0-1-0",
+                                    children: [
+                                        {
+                                            title: "my",
+                                            key: "0-0-0-1-0-1",
+                                            children: [
+                                                {
+                                                    title: "alex",
+                                                    key: "0-0-0-1-0-1-0",
+                                                    children: [
+                                                        {
+                                                            title: "tasks",
+                                                            key: "0-0-0-1-0-1-0-2",
+                                                            children: [
+                                                                {
+                                                                    title: "Decision.java",
+                                                                    key: "0-0-0-1-0-1-0-3",
+                                                                    isLeaf: true,
+                                                                },
+                                                            ],
+                                                        },
+                                                    ],
+                                                },
+                                            ],
+                                        },
+                                    ],
+                                },
+                            ],
+                        },
+                    ],
+                },
+            ],
+        },
+        {
+            title: "files",
+            key: "0-1",
+            children: [
+                {
+                    title: "build.gradle",
+                    key: "0-1-0",
+                    isLeaf: true,
+                },
+            ],
+        },
+    ];
+
+    const onSelect = (keys, info) => {
+        console.log("Trigger Select", keys, info);
+    };
+    const onExpand = (keys, info) => {
+        console.log("Trigger Expand", keys, info);
+    };
 
     const showDrawer = () => {
         setOpen(true);
@@ -25,7 +95,7 @@ const Simulator = () => {
             key: "1",
             label: <p className="dark:text-gray-50">Условие</p>,
             children: (
-                <div className="h-[30vh] overflow-y-scroll dark:bg-slate-700 bg-slate-100 text-center dark:text-gray-50 font-bold text-xl">
+                <div className="h-[40vh] overflow-y-scroll dark:bg-slate-700 bg-slate-50 text-center dark:text-gray-50  text-xl">
                     {task.description}
                 </div>
             ),
@@ -34,8 +104,14 @@ const Simulator = () => {
             key: "2",
             label: <p className="dark:text-gray-50">Структура</p>,
             children: (
-                <div className="h-[30vh] overflow-y-scroll dark:bg-slate-700 bg-slate-100 text-center dark:text-gray-50 font-bold text-xl">
-                    Тут будет структура
+                <div className="h-[40vh] overflow-y-scroll dark:bg-slate-700 bg-slate-50 dark:text-gray-50 text-xl">
+                    <DirectoryTree
+                        multiple
+                        defaultExpandAll
+                        onSelect={onSelect}
+                        onExpand={onExpand}
+                        treeData={treeData}
+                    />
                 </div>
             ),
         },
@@ -47,7 +123,7 @@ const Simulator = () => {
             <div
                 className={`flex justify-between  px-2 lg:px-10 mt-10 h-screen`}
             >
-                <div className="w-3/6 flex flex-col border-r-2 border-none border-zinc-400 dark:border-slate-700 lg:border-solid">
+                <div className="w-3/6 flex flex-col border-r-2 border-none border-zinc-400 dark:border-slate-700 lg:border-solid overflow-y-scroll">
                     <div className="flex justify-center">
                         <h1 className="font-serif text-center dark:text-gray-50 text-2xl font-bold">
                             {task.task}
@@ -202,19 +278,29 @@ const Simulator = () => {
                         </button>
                     </div>
                 </div>
-                <div
-                    className={`hidden lg:block w-3/6 border-t-2 border-slate-700 border-solid`}
-                >
+                <div className={`hidden lg:block w-3/6 `}>
+                    <div className="px-3">
+                        <Editor
+                            height="60vh"
+                            defaultLanguage="java"
+                            theme="vs-dark"
+                            defaultValue='class HelloWorld {
+                        public static void main(String[] args) {
+                            System.out.println("Hello world!");
+                        }
+                    }'
+                        />
+                    </div>
                     <div className="flex justify-center my-3">
                         <button
                             type="button"
-                            className="inline-flex mx-2 items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+                            className="inline-flex mx-2 px-5 items-center bg-lime-400 rounded-md py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
                         >
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 viewBox="0 0 24 24"
                                 fill="currentColor"
-                                className="w-6 h-6 bg-lime-600"
+                                className="w-6 h-6"
                             >
                                 <path
                                     fillRule="evenodd"
@@ -225,40 +311,89 @@ const Simulator = () => {
                         </button>
                         <button
                             type="button"
-                            className="inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+                            className="inline-flex px-5 mx-2 items-center rounded-md bg-orange-400 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
                         >
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
-                                fill="none"
                                 viewBox="0 0 24 24"
-                                strokeWidth={1.5}
-                                stroke="currentColor"
-                                className="w-6 h-6 bg-orange-500"
+                                fill="currentColor"
+                                className="w-6 h-6"
                             >
                                 <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    d="M3 3v1.5M3 21v-6m0 0l2.77-.693a9 9 0 016.208.682l.108.054a9 9 0 006.086.71l3.114-.732a48.524 48.524 0 01-.005-10.499l-3.11.732a9 9 0 01-6.085-.711l-.108-.054a9 9 0 00-6.208-.682L3 4.5M3 15V4.5"
+                                    fillRule="evenodd"
+                                    d="M3 2.25a.75.75 0 01.75.75v.54l1.838-.46a9.75 9.75 0 016.725.738l.108.054a8.25 8.25 0 005.58.652l3.109-.732a.75.75 0 01.917.81 47.784 47.784 0 00.005 10.337.75.75 0 01-.574.812l-3.114.733a9.75 9.75 0 01-6.594-.77l-.108-.054a8.25 8.25 0 00-5.69-.625l-2.202.55V21a.75.75 0 01-1.5 0V3A.75.75 0 013 2.25z"
+                                    clipRule="evenodd"
+                                />
+                            </svg>
+                        </button>
+                        <button
+                            type="button"
+                            className="inline-flex px-5 mx-2  items-center rounded-md bg-sky-400 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+                        >
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                viewBox="0 0 24 24"
+                                fill="currentColor"
+                                class="w-6 h-6"
+                            >
+                                <path
+                                    fill-rule="evenodd"
+                                    d="M19.5 21a3 3 0 003-3V9a3 3 0 00-3-3h-5.379a.75.75 0 01-.53-.22L11.47 3.66A2.25 2.25 0 009.879 3H4.5a3 3 0 00-3 3v12a3 3 0 003 3h15zm-6.75-10.5a.75.75 0 00-1.5 0v4.19l-1.72-1.72a.75.75 0 00-1.06 1.06l3 3a.75.75 0 001.06 0l3-3a.75.75 0 10-1.06-1.06l-1.72 1.72V10.5z"
+                                    clip-rule="evenodd"
+                                />
+                            </svg>
+                        </button>
+                        <button
+                            type="button"
+                            className="inline-flex px-5 mx-2  items-center rounded-md bg-red-400 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+                        >
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                viewBox="0 0 24 24"
+                                fill="currentColor"
+                                class="w-6 h-6"
+                            >
+                                <path
+                                    fill-rule="evenodd"
+                                    d="M2.25 2.25a.75.75 0 000 1.5H3v10.5a3 3 0 003 3h1.21l-1.172 3.513a.75.75 0 001.424.474l.329-.987h8.418l.33.987a.75.75 0 001.422-.474l-1.17-3.513H18a3 3 0 003-3V3.75h.75a.75.75 0 000-1.5H2.25zm6.04 16.5l.5-1.5h6.42l.5 1.5H8.29zm7.46-12a.75.75 0 00-1.5 0v6a.75.75 0 001.5 0v-6zm-3 2.25a.75.75 0 00-1.5 0v3.75a.75.75 0 001.5 0V9zm-3 2.25a.75.75 0 00-1.5 0v1.5a.75.75 0 001.5 0v-1.5z"
+                                    clip-rule="evenodd"
                                 />
                             </svg>
                         </button>
                     </div>
-                    <div className="px-3">
-                        <Editor
-                            height="49vh"
-                            defaultLanguage="java"
-                            theme="vs-dark"
-                            defaultValue='class HelloWorld {
-                        public static void main(String[] args) {
-                            System.out.println("Hello world!");
-                        }
-                    }'
-                        />
-                    </div>
-                    <div className="border-y-2 border-slate-600 border-solid mt-2 mx-0">
-                        <span className="px-3 font-bold py-2 dark:text-gray-50">
+                    <div className="border-y-2 border-slate-600 border-solid mt-2 flex justify-start items-center bg-slate-900 mx-4 w-full">
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 24 24"
+                            fill="currentColor"
+                            className="w-6 h-6 text-slate-50"
+                        >
+                            <path
+                                fillRule="evenodd"
+                                d="M2.25 6a3 3 0 013-3h13.5a3 3 0 013 3v12a3 3 0 01-3 3H5.25a3 3 0 01-3-3V6zm3.97.97a.75.75 0 011.06 0l2.25 2.25a.75.75 0 010 1.06l-2.25 2.25a.75.75 0 01-1.06-1.06l1.72-1.72-1.72-1.72a.75.75 0 010-1.06zm4.28 4.28a.75.75 0 000 1.5h3a.75.75 0 000-1.5h-3z"
+                                clipRule="evenodd"
+                            />
+                        </svg>
+
+                        <span className="px-5 font-bold py-2 bg-slate-900 text-gray-50">
                             Вывод:
                         </span>
+                    </div>
+                    <div className="w-full h-[20vh] bg-slate-900 text-slate-50 mx-4">
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            strokeWidth={1.5}
+                            stroke="currentColor"
+                            className="w-6 h-6 text-teal-50"
+                        >
+                            <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                d="M11.25 4.5l7.5 7.5-7.5 7.5m-6-15l7.5 7.5-7.5 7.5"
+                            />
+                        </svg>
                     </div>
                 </div>
 
@@ -348,6 +483,19 @@ const Simulator = () => {
                                                 />
                                             </div>
                                             <div className="border-y-2 border-slate-600 border-solid mt-2 mx-0">
+                                                <svg
+                                                    xmlns="http://www.w3.org/2000/svg"
+                                                    viewBox="0 0 24 24"
+                                                    fill="currentColor"
+                                                    className="w-6 h-6"
+                                                >
+                                                    <path
+                                                        fillRule="evenodd"
+                                                        d="M2.25 6a3 3 0 013-3h13.5a3 3 0 013 3v12a3 3 0 01-3 3H5.25a3 3 0 01-3-3V6zm3.97.97a.75.75 0 011.06 0l2.25 2.25a.75.75 0 010 1.06l-2.25 2.25a.75.75 0 01-1.06-1.06l1.72-1.72-1.72-1.72a.75.75 0 010-1.06zm4.28 4.28a.75.75 0 000 1.5h3a.75.75 0 000-1.5h-3z"
+                                                        clipRule="evenodd"
+                                                    />
+                                                </svg>
+
                                                 <span className="px-3 font-bold py-2 dark:text-gray-50">
                                                     Вывод:
                                                 </span>

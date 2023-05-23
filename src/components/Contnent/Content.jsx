@@ -6,6 +6,7 @@ import { ChevronDownIcon } from "@heroicons/react/20/solid";
 import { useNavigate } from "react-router";
 import ListTasks from "../lListTask/ListTasks";
 import PaginationTasks from "../PaginationTasks/PaginationTasks";
+import human from "../../img/human.png";
 
 function classNames(...classes) {
     return classes.filter(Boolean).join(" ");
@@ -169,19 +170,24 @@ const Content = () => {
                     <PaginationTasks />
                 </div>
             </div>
-            <div className="w-5/12 mt-10 hidden lg:block">
+            <div className="w-5/12 mt-10 hidden lg:block border-l-2 border-solid border-slate-100">
                 <h2 className="text-center font-bold text-3xl dark:text-gray-50">
                     Описание
                 </h2>
-                <div className="p-5 dark:text-gray-50">
+                <div className="p-5 dark:text-gray-50 flex flex-col items-between justify-between h-full">
                     {description}
+                    <div className="flex justify-center mt-4">
+                        <img className="w-2/6 h-full" src={human} alt="human" />
+                    </div>
                     {description ? (
-                        <button
-                            className="px-7 w-full mt-24 py-4 text-white duration-150 bg-indigo-600 rounded-full hover:bg-indigo-500 active:bg-indigo-700"
-                            onClick={() => navigate("/simulator")}
-                        >
-                            Решить в тренажере
-                        </button>
+                        <div className="flex justify-center">
+                            <button
+                                className="px-7 w-8/12 xl:w-10/12 mt-20 py-4 xl:text-lg text-white duration-150 bg-indigo-600 rounded-full hover:bg-indigo-500 active:bg-indigo-700"
+                                onClick={() => navigate("/simulator")}
+                            >
+                                Решить в тренажере
+                            </button>
+                        </div>
                     ) : null}
                 </div>
                 <div></div>
@@ -222,7 +228,7 @@ const Content = () => {
                                 </div>
                                 <div className="flex items-center gap-3 p-4 mt-5 border-t">
                                     <button
-                                        className="px-6 py-2 text-white bg-indigo-600 rounded-md outline-none ring-offset-2 ring-indigo-600 focus:ring-2"
+                                        className="px-6 py-2 text-white  bg-indigo-600 rounded-md outline-none ring-offset-2 ring-indigo-600 focus:ring-2"
                                         onClick={() => {
                                             setOpen(false);
                                             navigate("/simulator");
