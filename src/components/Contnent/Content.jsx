@@ -1,21 +1,19 @@
-import { useEffect, useState } from 'react';
-import FilterDropdown from '../FilterDropdown/FilterDropDown';
-import { Fragment } from 'react'
-import { Menu, Transition } from '@headlessui/react'
-import { ChevronDownIcon } from '@heroicons/react/20/solid'
-import { useNavigate } from 'react-router';
-import ListTasks from '../lListTask/ListTasks';
-import PaginationTasks from '../PaginationTasks/PaginationTasks';
-
+import { useEffect, useState } from "react";
+import FilterDropdown from "../FilterDropdown/FilterDropDown";
+import { Fragment } from "react";
+import { Menu, Transition } from "@headlessui/react";
+import { ChevronDownIcon } from "@heroicons/react/20/solid";
+import { useNavigate } from "react-router";
+import ListTasks from "../lListTask/ListTasks";
+import PaginationTasks from "../PaginationTasks/PaginationTasks";
 
 function classNames(...classes) {
-    return classes.filter(Boolean).join(' ')
+    return classes.filter(Boolean).join(" ");
 }
-
 
 const Content = () => {
     const [loading, setLoading] = useState(false);
-    const [description, setDescription] = useState('');
+    const [description, setDescription] = useState("");
     const [value, setValue] = useState(3);
     const [open, setOpen] = useState(false);
     const [current, setCurrent] = useState(3);
@@ -39,15 +37,27 @@ const Content = () => {
     };
 
     return (
-        <div className='flex justify-between z-0 relative'>
-            <div className='w-full lg:w-7/12'>
-                <div className='flex md:hidden'>
+        <div className="flex justify-between z-0 relative">
+            <div className="w-full lg:w-7/12">
+                <div className="flex md:hidden">
                     <form
                         onSubmit={(e) => e.preventDefault()}
-                        className="px-4 w-full mx-auto">
+                        className="px-4 w-full mx-auto"
+                    >
                         <div className="relative">
-                            <svg xmlns="http://www.w3.org/2000/svg" className="absolute top-0 bottom-0 w-3 h-3 my-auto text-gray-400 left-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                className="absolute top-0 bottom-0 w-3 h-3 my-auto text-gray-400 left-3"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor"
+                            >
+                                <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    strokeWidth={2}
+                                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                                />
                             </svg>
                             <input
                                 type="text"
@@ -57,14 +67,26 @@ const Content = () => {
                         </div>
                     </form>
                 </div>
-                <div className='flex justify-between items-center px-2'>
-                    <div className='hidden md:flex w-full mt-2'>
+                <div className="flex justify-between items-center px-2">
+                    <div className="hidden md:flex w-full mt-2">
                         <form
                             onSubmit={(e) => e.preventDefault()}
-                            className="max-w-md px-4 mx-auto">
+                            className="max-w-md px-4 mx-auto"
+                        >
                             <div className="relative">
-                                <svg xmlns="http://www.w3.org/2000/svg" className="absolute top-0 bottom-0 w-3 h-3 my-auto text-gray-400 left-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    className="absolute top-0 bottom-0 w-3 h-3 my-auto text-gray-400 left-3"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    stroke="currentColor"
+                                >
+                                    <path
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                        strokeWidth={2}
+                                        d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                                    />
                                 </svg>
                                 <input
                                     type="text"
@@ -74,15 +96,21 @@ const Content = () => {
                             </div>
                         </form>
                     </div>
-                    <div className='py-3 flex justify-start w-full'>
+                    <div className="py-3 flex justify-start w-full">
                         <FilterDropdown />
                     </div>
-                    <div className='py-3 px-3 flex justify-end'>
-                        <Menu as="div" className="relative inline-block text-left">
+                    <div className="py-3 px-3 flex justify-end">
+                        <Menu
+                            as="div"
+                            className="relative inline-block text-left"
+                        >
                             <div>
                                 <Menu.Button className="md:text-base inline-flex w-full justify-center dark:border-slate-800 border-white gap-x-1.5 rounded-md dark:bg-slate-800 bg-white px-3 py-2 text-sm font-semibold dark:text-gray-50 text-gray-900  hover:bg-gray-50">
                                     Сортировка
-                                    <ChevronDownIcon className="-mr-1 h-5 w-5 text-gray-400" aria-hidden="true" />
+                                    <ChevronDownIcon
+                                        className="-mr-1 h-5 w-5 text-gray-400"
+                                        aria-hidden="true"
+                                    />
                                 </Menu.Button>
                             </div>
 
@@ -102,8 +130,10 @@ const Content = () => {
                                                 <a
                                                     href="#"
                                                     className={classNames(
-                                                        active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
-                                                        'block px-4 py-2 text-sm'
+                                                        active
+                                                            ? "bg-gray-100 text-gray-900"
+                                                            : "text-gray-700",
+                                                        "block px-4 py-2 text-sm"
                                                     )}
                                                 >
                                                     По сложности
@@ -115,8 +145,10 @@ const Content = () => {
                                                 <a
                                                     href="#"
                                                     className={classNames(
-                                                        active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
-                                                        'block px-4 py-2 text-sm'
+                                                        active
+                                                            ? "bg-gray-100 text-gray-900"
+                                                            : "text-gray-700",
+                                                        "block px-4 py-2 text-sm"
                                                     )}
                                                 >
                                                     По рейтингу
@@ -129,44 +161,59 @@ const Content = () => {
                         </Menu>
                     </div>
                 </div>
-                <div className="w-full">
-                    <ListTasks setDescription={setDescription} showDrawer={showDrawer} />
+                <div className="w-full h-[80vh] flex flex-col justify-between">
+                    <ListTasks
+                        setDescription={setDescription}
+                        showDrawer={showDrawer}
+                    />
                     <PaginationTasks />
                 </div>
             </div>
-            <div className='w-5/12 mt-10 hidden lg:block'>
-                <h2 className='text-center font-bold text-3xl dark:text-gray-50'>Описание</h2>
-                <div className='p-5 dark:text-gray-50'>
+            <div className="w-5/12 mt-10 hidden lg:block">
+                <h2 className="text-center font-bold text-3xl dark:text-gray-50">
+                    Описание
+                </h2>
+                <div className="p-5 dark:text-gray-50">
                     {description}
-                    {description ?
+                    {description ? (
                         <button
                             className="px-7 w-full mt-24 py-4 text-white duration-150 bg-indigo-600 rounded-full hover:bg-indigo-500 active:bg-indigo-700"
-                            onClick={() => navigate('/simulator')}
+                            onClick={() => navigate("/simulator")}
                         >
                             Решить в тренажере
                         </button>
-                        :
-                        null
-                    }
+                    ) : null}
                 </div>
-                <div>
-                </div>
+                <div></div>
             </div>
-            <div className='block lg:hidden z-10'>
-                {open ?
+            <div className="block lg:hidden z-10">
+                {open ? (
                     <div className="fixed inset-0 z-10 overflow-y-auto">
-                        <div className="fixed inset-0 w-full h-full bg-black opacity-40" onClick={() => setOpen(false)}></div>
+                        <div
+                            className="fixed inset-0 w-full h-full bg-black opacity-40"
+                            onClick={() => setOpen(false)}
+                        ></div>
                         <div className="flex items-center min-h-screen px-4 py-8">
                             <div className="relative w-full max-w-lg mx-auto bg-white rounded-md shadow-lg">
                                 <div className="flex items-center justify-between p-4 border-b">
                                     <h4 className="text-lg font-medium text-gray-800">
                                         Описание
                                     </h4>
-                                    <button className="p-2 text-gray-400 rounded-md hover:bg-gray-100"
+                                    <button
+                                        className="p-2 text-gray-400 rounded-md hover:bg-gray-100"
                                         onClick={() => setOpen(false)}
                                     >
-                                        <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5 mx-auto" viewBox="0 0 20 20" fill="currentColor">
-                                            <path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd" />
+                                        <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            className="w-5 h-5 mx-auto"
+                                            viewBox="0 0 20 20"
+                                            fill="currentColor"
+                                        >
+                                            <path
+                                                fillRule="evenodd"
+                                                d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                                                clipRule="evenodd"
+                                            />
                                         </svg>
                                     </button>
                                 </div>
@@ -174,12 +221,17 @@ const Content = () => {
                                     {description}
                                 </div>
                                 <div className="flex items-center gap-3 p-4 mt-5 border-t">
-                                    <button className="px-6 py-2 text-white bg-indigo-600 rounded-md outline-none ring-offset-2 ring-indigo-600 focus:ring-2"
-                                        onClick={() => {setOpen(false);  navigate('/simulator')}}
+                                    <button
+                                        className="px-6 py-2 text-white bg-indigo-600 rounded-md outline-none ring-offset-2 ring-indigo-600 focus:ring-2"
+                                        onClick={() => {
+                                            setOpen(false);
+                                            navigate("/simulator");
+                                        }}
                                     >
                                         Решить в тренажере
                                     </button>
-                                    <button className="px-6 py-2 text-gray-800 border rounded-md outline-none ring-offset-2 ring-indigo-600 focus:ring-2"
+                                    <button
+                                        className="px-6 py-2 text-gray-800 border rounded-md outline-none ring-offset-2 ring-indigo-600 focus:ring-2"
                                         onClick={() => setOpen(false)}
                                     >
                                         Закрыть
@@ -188,11 +240,10 @@ const Content = () => {
                             </div>
                         </div>
                     </div>
-                    :
-                    null}
+                ) : null}
             </div>
         </div>
-    )
-}
+    );
+};
 
 export default Content;

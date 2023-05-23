@@ -15,11 +15,6 @@ const items = [
         label: <p className="dark:text-gray-50">Структура</p>,
         children: <div className="h-24 dark:bg-slate-700 bg-slate-100 text-center dark:text-gray-50 font-bold text-xl">Тут будет структура</div>,
     },
-    {
-        key: '3',
-        label: <p className="dark:text-gray-50">Тесты</p>,
-        children: <div className="h-24 dark:bg-slate-700 bg-slate-100 text-center dark:text-gray-50 font-bold text-xl">Тут будут тесты</div>,
-    },
 ];
 
 const radios = ["Write and Read", "Read only", "Write only"]
@@ -238,8 +233,6 @@ const Simulator = () => {
                         null}
                 </div>
             </div>
-
-
         </>
     )
 }
