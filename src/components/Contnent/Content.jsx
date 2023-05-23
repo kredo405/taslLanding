@@ -161,7 +161,7 @@ const Content = () => {
                         </Menu>
                     </div>
                 </div>
-                <div className="w-full h-[80vh] flex flex-col justify-between">
+                <div className="w-full lg:h-[50vh] xl:h-[80vh] flex flex-col justify-between">
                     <ListTasks
                         setDescription={setDescription}
                         showDrawer={showDrawer}

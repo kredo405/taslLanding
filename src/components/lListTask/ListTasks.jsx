@@ -126,7 +126,7 @@ const ListTasks = ({ setDescription, showDrawer }) => {
     }, [checkboxItems]);
 
     return (
-        <div className="w-full mx-auto px-4 md:px-8">
+        <div className="w-full mx-auto px-4 md:px-8 overflow-y-scroll">
             <div className="mt-5 shadow-sm border rounded-lg overflow-x-auto dark:border-slate-700">
                 <table className="w-full h-full table-auto text-sm text-left">
                     <thead className="dark:text-gray-50 text-gray-600 font-medium border-b dark:border-slate-700">
