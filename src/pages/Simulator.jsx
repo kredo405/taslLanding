@@ -1,7 +1,8 @@
 import Nav from "../components/Nav/Nav";
 import { useSelector } from "react-redux";
 import { Tabs } from "antd";
-import Editor from "@monaco-editor/react";
+// import Editor from "@monaco-editor/react";
+import EditorCode from "../components/EditorCode/EditorCode";
 import Footer from "../components/Footer/Footer";
 import { Tree } from "antd";
 import { useState } from "react";
@@ -121,7 +122,7 @@ const Simulator = () => {
         <>
             <Nav />
             <div
-                className={`flex justify-between  px-2 lg:px-10 mt-10 h-screen`}
+                className={`flex flex-col md:flex-row  justify-between  px-2 lg:px-10 mt-10 h-screen`}
             >
                 <div className="w-3/6 flex flex-col border-r-2 border-none border-zinc-400 dark:border-slate-700 lg:border-solid overflow-y-scroll">
                     <div className="flex justify-center">
@@ -226,18 +227,7 @@ const Simulator = () => {
                             ))}
                         </ul>
                     </div>
-                    <div className="border-t-2 border-slate-400 dark:border-slate-700 border-solid mt-5 pt-3">
-                        <span className="mx-2 inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20">
-                            Arrays
-                        </span>
-                        <span className="mx-2  inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20">
-                            Stream
-                        </span>
-                        <span className="mx-2  inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20">
-                            Io
-                        </span>
-                    </div>
-                    <div className="flex justify-center mx-5 items-end h-full">
+                    <div className="flex justify-center mx-5 items-end">
                         <button
                             type="button"
                             className="inline-flex items-center rounded-md bg-indigo-600 px-3  py-2  2xl:text-lg text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
@@ -253,54 +243,33 @@ const Simulator = () => {
                             </svg>
                             Подсказка
                         </button>
-                        <button
-                            type="button"
-                            className="ml-3 lg:hidden inline-flex items-center rounded-md bg-lime-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-lime-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                            onClick={() => {
-                                showDrawer();
-                            }}
-                        >
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                strokeWidth={1.5}
-                                stroke="currentColor"
-                                className="w-6 h-6"
-                            >
-                                <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    d="M17.25 6.75L22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3l-4.5 16.5"
-                                />
-                            </svg>
-                            Редактор кода
-                        </button>
+                    </div>
+                    <div className="border-t-2 border-slate-400 dark:border-slate-700 border-solid mt-5 pt-3">
+                        <span className="mx-2 inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20">
+                            Arrays
+                        </span>
+                        <span className="mx-2  inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20">
+                            Stream
+                        </span>
+                        <span className="mx-2  inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20">
+                            Io
+                        </span>
                     </div>
                 </div>
-                <div className={`hidden lg:block w-3/6 `}>
+                <div className={`block w-3/6 `}>
                     <div className="px-3">
-                        <Editor
-                            height="60vh"
-                            defaultLanguage="java"
-                            theme="vs-dark"
-                            defaultValue='class HelloWorld {
-                        public static void main(String[] args) {
-                            System.out.println("Hello world!");
-                        }
-                    }'
-                        />
+                        <EditorCode />
                     </div>
                     <div className="flex justify-center my-3">
                         <button
                             type="button"
-                            className="inline-flex mx-2 px-5 items-center bg-lime-400 rounded-md py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+                            className="inline-flex mx-2 px-5 items-center bg-lime-500 rounded-md py-2 text-sm font-semibold text-slate-50 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 hover:text-slate-800"
                         >
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 viewBox="0 0 24 24"
                                 fill="currentColor"
-                                className="w-6 h-6"
+                                className="w-6 h-6 mx-2"
                             >
                                 <path
                                     fillRule="evenodd"
@@ -308,16 +277,17 @@ const Simulator = () => {
                                     clipRule="evenodd"
                                 />
                             </svg>
+                            Запустить
                         </button>
                         <button
                             type="button"
-                            className="inline-flex px-5 mx-2 items-center rounded-md bg-orange-400 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+                            className="inline-flex px-5 mx-2 items-center rounded-md bg-orange-500 py-2 text-sm font-semibold text-slate-50 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 hover:text-slate-800"
                         >
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 viewBox="0 0 24 24"
                                 fill="currentColor"
-                                className="w-6 h-6"
+                                className="w-6 h-6 mx-2"
                             >
                                 <path
                                     fillRule="evenodd"
@@ -325,16 +295,17 @@ const Simulator = () => {
                                     clipRule="evenodd"
                                 />
                             </svg>
+                            Проверить
                         </button>
                         <button
                             type="button"
-                            className="inline-flex px-5 mx-2  items-center rounded-md bg-sky-400 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+                            className="inline-flex px-5 mx-2  items-center rounded-md bg-sky-500 py-2 text-sm font-semibold text-gray-50 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 hover:text-slate-800"
                         >
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 viewBox="0 0 24 24"
                                 fill="currentColor"
-                                class="w-6 h-6"
+                                class="w-6 h-6 mx-2"
                             >
                                 <path
                                     fill-rule="evenodd"
@@ -342,16 +313,17 @@ const Simulator = () => {
                                     clip-rule="evenodd"
                                 />
                             </svg>
+                            Сохранить
                         </button>
                         <button
                             type="button"
-                            className="inline-flex px-5 mx-2  items-center rounded-md bg-red-400 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+                            className="inline-flex px-5 mx-2  items-center rounded-md bg-red-500 py-2 text-sm font-semibold text-gray-50 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 hover:text-slate-800"
                         >
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 viewBox="0 0 24 24"
                                 fill="currentColor"
-                                class="w-6 h-6"
+                                class="w-6 h-6 mx-2"
                             >
                                 <path
                                     fill-rule="evenodd"
@@ -359,14 +331,15 @@ const Simulator = () => {
                                     clip-rule="evenodd"
                                 />
                             </svg>
+                            Сбросить
                         </button>
                     </div>
-                    <div className="border-y-2 border-slate-600 border-solid mt-2 flex justify-start items-center bg-slate-900 mx-4 w-full">
+                    <div className="border-y-2 border-slate-600 border-solid mt-2 flex justify-start items-center bg-slate-50 dark:bg-slate-900 mx-4 w-full">
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
                             viewBox="0 0 24 24"
                             fill="currentColor"
-                            className="w-6 h-6 text-slate-50"
+                            className="w-6 h-6 text-slate-880 dark:text-gray-100"
                         >
                             <path
                                 fillRule="evenodd"
@@ -375,18 +348,18 @@ const Simulator = () => {
                             />
                         </svg>
 
-                        <span className="px-5 font-bold py-2 bg-slate-900 text-gray-50">
+                        <span className="px-5 font-bold py-2 bg-slate-50 text-gray-700 dark:bg-slate-900 dark:text-gray-100">
                             Вывод:
                         </span>
                     </div>
-                    <div className="w-full h-[20vh] bg-slate-900 text-slate-50 mx-4">
+                    <div className="w-full h-[20vh] bg-slate-50 dark:bg-slate-900 dark:text-gray-100 text-slate-800 mx-4">
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
                             fill="none"
                             viewBox="0 0 24 24"
                             strokeWidth={1.5}
                             stroke="currentColor"
-                            className="w-6 h-6 text-teal-50"
+                            className="w-6 h-6 text-teal-800"
                         >
                             <path
                                 strokeLinecap="round"
@@ -395,125 +368,6 @@ const Simulator = () => {
                             />
                         </svg>
                     </div>
-                </div>
-
-                <div className="block lg:hidden z-10">
-                    {open ? (
-                        <div className="fixed inset-0 z-10 overflow-y-auto">
-                            <div
-                                className="fixed inset-0 w-full h-full bg-black opacity-40"
-                                onClick={() => setOpen(false)}
-                            ></div>
-                            <div className="flex items-center min-h-screen px-4 py-8">
-                                <div className="relative w-full max-w-lg mx-auto bg-white rounded-md shadow-lg">
-                                    <div className="flex items-center justify-between p-4 border-b">
-                                        <h4 className="text-lg font-medium text-gray-800">
-                                            Редактор
-                                        </h4>
-                                        <button
-                                            className="p-2 text-gray-400 rounded-md hover:bg-gray-100"
-                                            onClick={() => setOpen(false)}
-                                        >
-                                            <svg
-                                                xmlns="http://www.w3.org/2000/svg"
-                                                className="w-5 h-5 mx-auto"
-                                                viewBox="0 0 20 20"
-                                                fill="currentColor"
-                                            >
-                                                <path
-                                                    fillRule="evenodd"
-                                                    d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-                                                    clipRule="evenodd"
-                                                />
-                                            </svg>
-                                        </button>
-                                    </div>
-                                    <div className="space-y-2 p-4 mt-3 text-[15.5px] leading-relaxed text-gray-500">
-                                        <div
-                                            className={` w-full border-t-2 border-slate-700 border-solid`}
-                                        >
-                                            <div className="flex justify-center my-3">
-                                                <button
-                                                    type="button"
-                                                    className="inline-flex mx-2 items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
-                                                >
-                                                    <svg
-                                                        xmlns="http://www.w3.org/2000/svg"
-                                                        viewBox="0 0 24 24"
-                                                        fill="currentColor"
-                                                        className="w-6 h-6 bg-lime-600"
-                                                    >
-                                                        <path
-                                                            fillRule="evenodd"
-                                                            d="M4.5 5.653c0-1.426 1.529-2.33 2.779-1.643l11.54 6.348c1.295.712 1.295 2.573 0 3.285L7.28 19.991c-1.25.687-2.779-.217-2.779-1.643V5.653z"
-                                                            clipRule="evenodd"
-                                                        />
-                                                    </svg>
-                                                </button>
-                                                <button
-                                                    type="button"
-                                                    className="inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
-                                                >
-                                                    <svg
-                                                        xmlns="http://www.w3.org/2000/svg"
-                                                        fill="none"
-                                                        viewBox="0 0 24 24"
-                                                        strokeWidth={1.5}
-                                                        stroke="currentColor"
-                                                        className="w-6 h-6 bg-orange-500"
-                                                    >
-                                                        <path
-                                                            strokeLinecap="round"
-                                                            strokeLinejoin="round"
-                                                            d="M3 3v1.5M3 21v-6m0 0l2.77-.693a9 9 0 016.208.682l.108.054a9 9 0 006.086.71l3.114-.732a48.524 48.524 0 01-.005-10.499l-3.11.732a9 9 0 01-6.085-.711l-.108-.054a9 9 0 00-6.208-.682L3 4.5M3 15V4.5"
-                                                        />
-                                                    </svg>
-                                                </button>
-                                            </div>
-                                            <div className="px-3">
-                                                <Editor
-                                                    height="49vh"
-                                                    defaultLanguage="java"
-                                                    theme="vs-dark"
-                                                    defaultValue='class HelloWorld {
-                                                    public static void main(String[] args) {
-                                                        System.out.println("Hello world!");
-                                                    }
-                                                }'
-                                                />
-                                            </div>
-                                            <div className="border-y-2 border-slate-600 border-solid mt-2 mx-0">
-                                                <svg
-                                                    xmlns="http://www.w3.org/2000/svg"
-                                                    viewBox="0 0 24 24"
-                                                    fill="currentColor"
-                                                    className="w-6 h-6"
-                                                >
-                                                    <path
-                                                        fillRule="evenodd"
-                                                        d="M2.25 6a3 3 0 013-3h13.5a3 3 0 013 3v12a3 3 0 01-3 3H5.25a3 3 0 01-3-3V6zm3.97.97a.75.75 0 011.06 0l2.25 2.25a.75.75 0 010 1.06l-2.25 2.25a.75.75 0 01-1.06-1.06l1.72-1.72-1.72-1.72a.75.75 0 010-1.06zm4.28 4.28a.75.75 0 000 1.5h3a.75.75 0 000-1.5h-3z"
-                                                        clipRule="evenodd"
-                                                    />
-                                                </svg>
-
-                                                <span className="px-3 font-bold py-2 dark:text-gray-50">
-                                                    Вывод:
-                                                </span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="flex items-center gap-3 p-4 mt-5 border-t">
-                                        <button
-                                            className="px-6 py-2 text-gray-800 border rounded-md outline-none ring-offset-2 ring-indigo-600 focus:ring-2"
-                                            onClick={() => setOpen(false)}
-                                        >
-                                            Закрыть
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    ) : null}
                 </div>
             </div>
             <Footer />

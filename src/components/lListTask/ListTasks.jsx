@@ -253,7 +253,18 @@ const ListTasks = ({ setDescription, showDrawer }) => {
                                 key={idx}
                                 className="odd:bg-gray-50 dark:bg-slate-800 even:bg-white cursor-pointer"
                                 onClick={() => {
-                                    setDescription(item.description);
+                                    setDescription(
+                                        <div>
+                                            <div>{item.description}</div>
+                                            <div className="flex justify-center intems-center">
+                                                <img
+                                                    src="https://st4.depositphotos.com/9034578/24984/v/450/depositphotos_249840952-stock-illustration-miner-cup-mint-tea-isolated.jpg"
+                                                    alt="img"
+                                                    className="w-6/12 h-6/12"
+                                                />
+                                            </div>
+                                        </div>
+                                    );
                                     showDrawer();
                                     dispatch(
                                         setTask({
